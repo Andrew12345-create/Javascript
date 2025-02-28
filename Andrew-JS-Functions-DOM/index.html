@@ -6,7 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <script src="script.js"></script>
+
+    <button onclick="changeText()">Click Me</button>
+<p id="text">This is the original text.</p>
+
+<script>
+   function changeText() {
+      document.getElementById("text").innerHTML = "Text changed!";
+   }
+</script>
+
 </body>
 </html>
