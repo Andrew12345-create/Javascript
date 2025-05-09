@@ -9,6 +9,7 @@ document.getElementById("addTask").addEventListener("click", () => {
     input.value = ""; // Clear input field
     fetchQuote(); // Fetch a new quote
     saveTasks(); // Save tasks to localStorage
+    updateTaskCount(); // Update the task count
 });
 
 // Event listener for fetching a new quote
@@ -33,17 +34,20 @@ function addTaskToDOM(text, isCompleted) {
         taskList.removeChild(li); // Remove task from the list
         fetchQuote(); // Fetch a new quote
         saveTasks(); // Save updated tasks
+        updateTaskCount(); // Update the task count
     });
 
     // Event listener for toggling task completion
     li.addEventListener("click", () => {
         li.classList.toggle("completed");
         saveTasks(); // Save updated tasks
+        updateTaskCount(); // Update the task count
     });
 
     li.appendChild(taskText); // Add task text to the list item
     li.appendChild(deleteBtn); // Add delete button to the list item
     taskList.appendChild(li); // Add list item to the task list
+    updateTaskCount(); // Update the task count
 }
 
 // Function to fetch a random Chuck Norris quote
@@ -74,6 +78,16 @@ function saveTasks() {
 function loadTasks() {
     const saved = JSON.parse(localStorage.getItem("tasks")) || [];
     saved.forEach((task) => addTaskToDOM(task.text, task.completed));
+    updateTaskCount(); // Update the task count after loading tasks
+}
+
+// Function to update the task count
+function updateTaskCount() {
+    const taskList = document.querySelectorAll("#taskList li:not(.completed)");
+    const taskCount = taskList.length;
+    const taskCountDisplay = document.getElementById("taskCount");
+
+    taskCountDisplay.textContent = `You have ${taskCount} task(s) remaining.`;
 }
 
 // Load tasks and fetch a quote when the page loads
