@@ -3,7 +3,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
 }
 
 header {
@@ -13,51 +13,59 @@ header {
 }
 
 main {
-    padding: 20px
+    padding: 20px;
 }
 
-input {
+input[type="text"] {
     padding: 10px;
-    width: 200px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 60%;
+    max-width: 300px;
+    margin-bottom: 10px;
 }
 
 button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
+    margin-left: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: 0.3s;
 }
 
 button:hover {
     background-color: #45a049;
-    transform: scale(1.05);
 }
 
 ul {
     list-style: none;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 li {
-    background: lightgray;
-    margin: 10px auto;
+    background: #e0e0e0;
     padding: 10px;
-    width: 300px;
+    margin: 5px auto;
+    width: 80%;
+    max-width: 400px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .completed {
     text-decoration: line-through;
     color: gray;
+}
+
+#doneSection {
+    margin-top: 40px;
+}
+
+#doneSection:not(.visible) {
+    display: none;
 }

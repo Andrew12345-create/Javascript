@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TaskMaster Pro</title>
-    <link rel="stylesheet" href="project.css" />
+    <link rel="stylesheet" href="index.css" />
 </head>
 <body>
     <header>
@@ -16,7 +16,8 @@
             <input type="text" id="taskInput" placeholder="Enter a new task..." />
             <button id="addTask">Add Task</button>
             <ul id="taskList"></ul>
-            <p id="taskCount">You have 0 task(s) remaining.</p> <!-- Task count added here -->
+            <p id="taskCount">You have 0 task(s) remaining.</p>
+            <p id="doneCount">✅ 0 tasks done</p>
         </section>
 
         <section id="quoteSection">
@@ -24,12 +25,17 @@
             <p id="quoteDisplay">"A fresh roundhouse kick of inspiration will appear here."</p>
             <button id="newQuote">Get New Quote</button>
         </section>
+
+        <section id="doneSection">
+            <h2>Done Tasks</h2>
+            <ul id="doneList"></ul>
+        </section>
     </main>
 
     <footer>
         <p>&copy; 2025 TaskMaster Pro. All rights reserved.</p>
     </footer>
 
-    <script src="project.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
