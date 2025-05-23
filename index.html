@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f0f4f8;
+    }
+    input, button {
+      padding: 8px;
+      margin: 8px 0;
+    }
+    #weather {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    #loading-message {
+      color: #888;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌤️ Weather Dashboard</h1>
+  <input type="text" id="cityInput" placeholder="Enter city name" />
+  <button id="searchBtn">Get Weather</button>
+  <span id="loading-message">Loading...</span>
+
+  <div id="weather"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
