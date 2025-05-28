@@ -32,3 +32,4 @@ document.addEventListener('DOMContentLoaded', () => {
       addMessage('System', `Error: ${error.message}`);
       console.error('Error:', error);
     }
+  }
