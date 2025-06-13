@@ -50,7 +50,8 @@ const questions = [
     ],
     answer: "To contain metadata"
   },
-  {
+  /*
+  *{
     question: "Which of the following is a JavaScript data type?",
     options: [
       "String",
@@ -102,8 +103,9 @@ const questions = [
     ],
     answer: "To provide alternative text for the image"
   }
-];
 
+  */
+];
 let currentIndex = 0;
 let score = 0;
 
