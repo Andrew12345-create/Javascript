@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Leave Your Feedback</h2>
+    <form id="feedbackForm" autocomplete="off">
+      <input id="name" type="text" placeholder="Your Name" required>
+      <textarea id="message" rows="5" placeholder="Your feedback…" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="status"></div>
+    <hr>
+    <button id="showBtn" type="button">🔄 Show Feedback</button>
+    <ul id="feedbackList"></ul>
+  </div>
+  <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+/* --- Layout --- */
+body{
+  font-family:Arial, sans-serif;
+  background:#f0f4f8;
+  margin:0;
+}
+.container{
+  max-width:400px; margin:80px auto;
+  background:#fff; padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+/* --- Form --- */
+input,textarea{
+  width:100%; padding:12px; margin-bottom:12px;
+  border:1px solid #ccc; border-radius:8px;
+}
+button{
+  width:100%; padding:12px; cursor:pointer;
+  background:#4caf50; color:#fff; border:none; border-radius:8px;
+  font-weight:bold;
+}
+button:hover{ background:#45a049; }
+#showBtn{ background:#48c6ef; margin-top:12px; }
+#showBtn:hover{ background:#3297c6; }
+/* --- Feedback list --- */
+#feedbackList{
+  list-style:none; padding:0; margin-top:16px;
+}
+#feedbackList li{
+  background:#f7f9fc; border-left:4px solid #4caf50;
+  padding:8px 10px; margin-bottom:8px; border-radius:6px;
+  font-size:.9rem;
+}
+#status{ margin-top:12px; font-weight:bold; text-align:center; }
+
