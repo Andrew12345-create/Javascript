@@ -3,69 +3,57 @@ const SUPABASE_URL = 'https://cgwhktwtgzjxbhvuzccs.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnd2hrdHd0Z3pqeGJodnV6Y2NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAzOTg0NDIsImV4cCI6MjA2NTk3NDQ0Mn0.72p0s_3h3e1cLIMmgugNxdiEjQFrt7c20a5QjXJqldo';
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// --- Quiz Questions ---
+// --- Kenya Quiz Questions ---
 const questions = [
   {
-    question: "What does HTML stand for?",
-    options: [
-      "Hyperlinks and Text Markup Language",
-      "HyperText Markup Language",
-      "Home Tool Markup Language"
-    ],
-    answer: "HyperText Markup Language"
+    question: "What is the capital city of Kenya?",
+    options: ["Nairobi", "Mombasa", "Kisumu"],
+    answer: "Nairobi"
   },
   {
-    question: "What is the correct syntax to link a CSS file?",
-    options: [
-      '<link rel="stylesheet" href="style.css">',
-      '<style src="style.css">',
-      '<css>style.css</css>'
-    ],
-    answer: '<link rel="stylesheet" href="style.css">'
+    question: "Which ocean borders Kenya to the southeast?",
+    options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean"],
+    answer: "Indian Ocean"
   },
   {
-    question: "Which JavaScript keyword declares a variable?",
-    options: ["let", "define", "create"],
-    answer: "let"
+    question: "What is the official language of Kenya?",
+    options: ["Swahili and English", "French", "Arabic"],
+    answer: "Swahili and English"
   },
   {
-    question: "Which tag is used to create a numbered list in HTML?",
-    options: ["<ol>", "<ul>", "<li>"],
-    answer: "<ol>"
+    question: "Which is the highest mountain in Kenya?",
+    options: ["Mount Elgon", "Mount Kenya", "Mount Kilimanjaro"],
+    answer: "Mount Kenya"
   },
   {
-    question: "How do you write a single-line comment in JavaScript?",
-    options: ["// comment", "<!-- comment -->", "# comment"],
-    answer: "// comment"
+    question: "Which famous wildlife migration occurs in the Maasai Mara?",
+    options: ["The Great Migration", "The Arctic Migration", "The Monarch Migration"],
+    answer: "The Great Migration"
   },
   {
-    question: "Which property changes the text color in CSS?",
-    options: ["color", "background-color", "font-style"],
-    answer: "color"
+    question: "What currency is used in Kenya?",
+    options: ["Kenyan Dollar", "Kenyan Shilling", "Kenyan Pound"],
+    answer: "Kenyan Shilling"
   },
   {
-    question: "What does DOM stand for?",
-    options: [
-      "Document Object Model",
-      "Data Object Management",
-      "Display Oriented Model"
-    ],
-    answer: "Document Object Model"
+    question: "Who was the first President of Kenya?",
+    options: ["Jomo Kenyatta", "Daniel arap Moi", "Uhuru Kenyatta"],
+    answer: "Jomo Kenyatta"
   },
   {
-    question: "Which method adds an element to the end of a JavaScript array?",
-    options: ["push()", "pop()", "shift()"],
-    answer: "push()"
+    question: "Which lake is the largest in Kenya?",
+    options: ["Lake Naivasha", "Lake Victoria", "Lake Turkana"],
+    answer: "Lake Turkana"
   },
   {
-    question: "How do you select an element with the id 'main' in CSS?",
-    options: ["#main", ".main", "main"],
-    answer: "#main"
+    question: "What is Kenya's country code for phone calls?",
+    options: ["+254", "+256", "+250"],
+    answer: "+254"
   },
   {
-    question: "What is the output of: console.log(typeof null);",
-    options: ["object", "null", "undefined"],
-    answer: "object"
+    question: "Which animal is NOT part of Kenya's 'Big Five'?",
+    options: ["Lion", "Cheetah", "Buffalo"],
+    answer: "Cheetah"
   }
 ];
 
@@ -113,11 +101,6 @@ function checkAnswer(selected, button) {
     resultDiv.innerHTML = `❌ Incorrect! Correct answer: <strong>${correct}</strong>`;
     resultDiv.style.color = "red";
     button.style.backgroundColor = "#ffcdd2";
-  }
-
-  // Always show the correct answer for question 2 (index 1)
-  if (currentIndex === 1) {
-    resultDiv.innerHTML += `<br><em>The correct answer is: <strong>${correct}</strong></em>`;
   }
 
   // Highlight correct answer if user was wrong
