@@ -192,3 +192,62 @@ function restartQuiz() {
 
 loadQuestion();
 nextBtn.style.display = "none";
+
+// --- Feedback Form Logic ---
+const fbForm = document.getElementById("feedbackForm");
+const fbStatus = document.getElementById("fb-status");
+const fbShowBtn = document.getElementById("showBtn");
+const fbList = document.getElementById("feedbackList");
+
+const setFbStatus = (msg, color) => {
+  fbStatus.textContent = msg;
+  fbStatus.style.color = color;
+};
+
+if (fbForm) {
+  fbForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("fb-name").value.trim();
+    const message = document.getElementById("fb-message").value.trim();
+    if (!name || !message) return setFbStatus("Fill in all fields", "red");
+
+    const { error } = await client.from("feedback").insert({ name, message });
+    if (error) {
+      console.error(error);
+      return setFbStatus("❌ insert failed", "red");
+    }
+
+    setFbStatus(`✅ Thank you, ${name}! (${new Date().toLocaleString()})`, "green");
+    fbForm.reset();
+    loadFeedback();
+  });
+
+  fbShowBtn.addEventListener("click", loadFeedback);
+
+  async function loadFeedback() {
+    fbList.innerHTML = "<li>Loading…</li>";
+    const { data, error } = await client
+      .from("feedback")
+      .select("name, message, created_at")
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) {
+      console.error(error);
+      fbList.innerHTML = "<li style='color:red'>load failed</li>";
+      return;
+    }
+
+    fbList.innerHTML = data.length
+      ? ""
+      : "<li>No feedback yet</li>";
+
+    data.forEach(({ name, message, created_at }) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${name}</strong>
+                      <em>(${new Date(created_at).toLocaleString()})</em><br>
+                      ${message}`;
+      fbList.appendChild(li);
+    });
+  }
+}
