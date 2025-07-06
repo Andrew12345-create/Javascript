@@ -61,6 +61,7 @@ const questions = [
 let currentIndex = 0;
 let score = 0;
 let answered = false;
+let quizStartTime = null;
 
 const questionDiv = document.getElementById("question");
 const optionsDiv = document.getElementById("options");
@@ -69,6 +70,7 @@ const resultDiv = document.getElementById("result");
 const leaderboardDiv = document.getElementById("leaderboard");
 
 function loadQuestion() {
+  if (currentIndex === 0 && !quizStartTime) quizStartTime = Date.now();
   answered = false;
   const q = questions[currentIndex];
   questionDiv.textContent = q.question;
@@ -134,12 +136,16 @@ function showResult() {
   optionsDiv.innerHTML = "";
   resultDiv.innerHTML = `🎉 Quiz Completed! You scored <strong>${score}/${questions.length}</strong>`;
 
+  // Calculate time taken
+  const quizEndTime = Date.now();
+  const timeTaken = Math.round((quizEndTime - quizStartTime) / 1000);
+
   // Ask for name
   const name = prompt("Enter your name for the leaderboard:");
   if (name) {
-    submitScore(name, score);
+    submitScore(name, score, timeTaken);
   } else {
-    getLeaderboard(); // Still show leaderboard even if no name entered
+    getLeaderboard();
   }
 
   const restartBtn = document.createElement("button");
@@ -155,10 +161,10 @@ function showResult() {
 // --- Supabase Leaderboard Functions ---
 
 // Save score to Supabase
-async function submitScore(name, score) {
+async function submitScore(name, score, time_taken) {
   const { error } = await client
-    .from('quiz_scores') // Use your table name
-    .insert([{ name, score }]);
+    .from('quiz_scores')
+    .insert([{ name, score, time_taken }]);
   if (error) {
     alert('Failed to submit score.');
     console.error(error);
@@ -169,26 +175,45 @@ async function submitScore(name, score) {
 // Fetch and display leaderboard from Supabase
 async function getLeaderboard() {
   const { data, error } = await client
-    .from('quiz_scores') // Use your table name
-    .select('name, score')
-    .order('score', { ascending: false })
+    .from("quiz_scores")
+    .select("name, score, time_taken")
+    .order("score", { ascending: false })   // highest score first
+    .order("time_taken", { ascending: true }) // tie‑break: fastest wins
     .limit(10);
+
   if (error) {
     leaderboardDiv.innerHTML = "<p>Could not load leaderboard.</p>";
     console.error(error);
     return;
   }
-  let html = '<h3>Leaderboard</h3><ol>';
-  data.forEach(entry => {
-    html += `<li>${entry.name}: ${entry.score}</li>`;
+
+  let html = '<h3>🏆 Fastest Leaderboard</h3><ol>';
+  data.forEach((entry, idx) => {
+    // Medal for top 3
+    const medal = idx === 0 ? "🥇"
+               : idx === 1 ? "🥈"
+               : idx === 2 ? "🥉"
+               : "";
+    // Row class for fancier CSS highlights (optional)
+    const rowClass = idx === 0 ? "top1"
+                  : idx === 1 ? "top2"
+                  : idx === 2 ? "top3"
+                  : "";
+    html += `
+      <li class="${rowClass}">
+         ${medal} <strong>#${idx + 1}</strong> ${entry.name}
+         <span class="score">${entry.score} pts</span>
+         <span style="margin-left:6px;">⏱️ ${entry.time_taken || 0}s</span>
+      </li>`;
   });
-  html += '</ol>';
+  html += "</ol>";
   leaderboardDiv.innerHTML = html;
 }
 
 function restartQuiz() {
   currentIndex = 0;
   score = 0;
+  quizStartTime = null;
   leaderboardDiv.innerHTML = "";
   document.getElementById('feedback-section').style.display = 'none';
   loadQuestion();
