@@ -6,52 +6,52 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 // --- Kenya Quiz Questions ---
 const questions = [
   {
-    question: "What is the capital city of Kenya?",
+    question: "🇰🇪 What is the capital city of Kenya?",
     options: ["Nairobi", "Mombasa", "Kisumu"],
     answer: "Nairobi"
   },
   {
-    question: "Which ocean borders Kenya to the southeast?",
+    question: "🌊 Which ocean borders Kenya to the southeast?",
     options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean"],
     answer: "Indian Ocean"
   },
   {
-    question: "What is the official language of Kenya?",
+    question: "🗣️ What is the official language of Kenya?",
     options: ["Swahili and English", "French", "Arabic"],
     answer: "Swahili and English"
   },
   {
-    question: "Which is the highest mountain in Kenya?",
+    question: "⛰️ Which is the highest mountain in Kenya?",
     options: ["Mount Elgon", "Mount Kenya", "Mount Kilimanjaro"],
     answer: "Mount Kenya"
   },
   {
-    question: "Which famous wildlife migration occurs in the Maasai Mara?",
+    question: "🦓 Which famous wildlife migration occurs in the Maasai Mara?",
     options: ["The Great Migration", "The Arctic Migration", "The Monarch Migration"],
     answer: "The Great Migration"
   },
   {
-    question: "What currency is used in Kenya?",
+    question: "💰 What currency is used in Kenya?",
     options: ["Kenyan Dollar", "Kenyan Shilling", "Kenyan Pound"],
     answer: "Kenyan Shilling"
   },
   {
-    question: "Who was the first President of Kenya?",
+    question: "👑 Who was the first President of Kenya?",
     options: ["Jomo Kenyatta", "Daniel arap Moi", "Uhuru Kenyatta"],
     answer: "Jomo Kenyatta"
   },
   {
-    question: "Which lake is the largest in Kenya?",
+    question: "🌅 Which lake is the largest in Kenya?",
     options: ["Lake Naivasha", "Lake Victoria", "Lake Turkana"],
     answer: "Lake Turkana"
   },
   {
-    question: "What is Kenya's country code for phone calls?",
+    question: "📞 What is Kenya's country code for phone calls?",
     options: ["+254", "+256", "+250"],
     answer: "+254"
   },
   {
-    question: "Which animal is NOT part of Kenya's 'Big Five'?",
+    question: "🐾 Which animal is NOT part of Kenya's 'Big Five'?",
     options: ["Lion", "Cheetah", "Buffalo"],
     answer: "Cheetah"
   }
@@ -68,6 +68,7 @@ const optionsDiv = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const resultDiv = document.getElementById("result");
 const leaderboardDiv = document.getElementById("leaderboard");
+const leaderboardStatusDiv = document.getElementById("leaderboard-status");
 
 function loadQuestion() {
   if (currentIndex === 0 && !quizStartTime) quizStartTime = Date.now();
@@ -158,6 +159,54 @@ function showResult() {
   document.getElementById('feedback-section').style.display = 'block';
 }
 
+// --- Show Leaderboard Status ---
+function showLeaderboardStatus(name, time_taken) {
+  leaderboardStatusDiv.innerHTML = "";
+  leaderboardStatusDiv.style.display = "none";
+
+  client
+    .from("quiz_scores")
+    .select("name, score, time_taken")
+    .order("score", { ascending: false })
+    .order("time_taken", { ascending: true })
+    .limit(10)
+    .then(({ data, error }) => {
+      if (error || !data) return;
+
+      // Find the user's place in the leaderboard
+      const place = data.findIndex(
+        entry =>
+          entry.name === name &&
+          entry.time_taken === time_taken
+      );
+
+      if (place !== -1) {
+        // User made the leaderboard
+        const medal = place === 0 ? "🥇"
+                    : place === 1 ? "🥈"
+                    : place === 2 ? "🥉"
+                    : "";
+        leaderboardStatusDiv.innerHTML = `
+          <div class="lb-status success">
+            ${medal ? `<span class="medal">${medal}</span>` : ""}
+            <strong>Congratulations!</strong> You are <span class="place">#${place + 1}</span> on the leaderboard.<br>
+            <span class="time">Your time: <b>${time_taken}s</b></span>
+          </div>
+        `;
+        leaderboardStatusDiv.style.display = "block";
+      } else {
+        // User did not make the leaderboard
+        leaderboardStatusDiv.innerHTML = `
+          <div class="lb-status fail">
+            <strong>Good try!</strong> You did not reach the top 10 leaderboard.<br>
+            <span class="time">Your time: <b>${time_taken}s</b></span>
+          </div>
+        `;
+        leaderboardStatusDiv.style.display = "block";
+      }
+    });
+}
+
 // --- Supabase Leaderboard Functions ---
 
 // Save score to Supabase
@@ -170,6 +219,7 @@ async function submitScore(name, score, time_taken) {
     console.error(error);
   }
   getLeaderboard();
+  showLeaderboardStatus(name, time_taken);
 }
 
 // Fetch and display leaderboard from Supabase
@@ -187,23 +237,29 @@ async function getLeaderboard() {
     return;
   }
 
-  let html = '<h3>🏆 Fastest Leaderboard</h3><ol>';
+  let html = `
+    <h3 style="margin-bottom:18px;font-size:1.3em;">
+      🏆 <span style="color:#1e7e34;">Top 10 Fastest Kenyans</span> 🏆
+    </h3>
+    <ol style="padding-left:0;">`;
   data.forEach((entry, idx) => {
-    // Medal for top 3
     const medal = idx === 0 ? "🥇"
                : idx === 1 ? "🥈"
                : idx === 2 ? "🥉"
                : "";
-    // Row class for fancier CSS highlights (optional)
+    const flag = "🇰🇪";
     const rowClass = idx === 0 ? "top1"
                   : idx === 1 ? "top2"
                   : idx === 2 ? "top3"
                   : "";
     html += `
       <li class="${rowClass}">
-         ${medal} <strong>#${idx + 1}</strong> ${entry.name}
-         <span class="score">${entry.score} pts</span>
-         <span style="margin-left:6px;">⏱️ ${entry.time_taken !== null && entry.time_taken !== undefined ? entry.time_taken : 0}s</span>
+        <span class="medal">${medal}</span>
+        <span class="flag">${flag}</span>
+        <strong>#${idx + 1}</strong>
+        <span class="name">${entry.name}</span>
+        <span class="score">${entry.score} pts</span>
+        <span class="time">⏱️ ${entry.time_taken !== null && entry.time_taken !== undefined ? entry.time_taken : 0}s</span>
       </li>`;
   });
   html += "</ol>";
@@ -215,6 +271,7 @@ function restartQuiz() {
   score = 0;
   quizStartTime = null;
   leaderboardDiv.innerHTML = "";
+  leaderboardStatusDiv.innerHTML = "";
   document.getElementById('feedback-section').style.display = 'none';
   loadQuestion();
 }

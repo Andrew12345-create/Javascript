@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kenya Quiz & Feedback</title>
+  <title>🇰🇪 Kenya Quiz</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -14,10 +14,11 @@
       <div id="options"></div>
       <button id="nextBtn">Next</button>
       <div id="result"></div>
+      <div id="leaderboard-status"></div>
       <div id="leaderboard"></div>
     </div>
     <div id="feedback-section" style="display:none; margin-top:40px;">
-      <h2>Leave Your Feedback</h2>
+      <h2>💬 Leave Your Feedback</h2>
       <form id="feedbackForm" autocomplete="off">
         <input id="fb-name" type="text" placeholder="Your Name" required>
         <textarea id="fb-message" rows="5" placeholder="Your feedback…" required></textarea>
@@ -27,6 +28,9 @@
       <hr>
       <button id="showBtn" type="button">🔄 Show Feedback</button>
       <ul id="feedbackList"></ul>
+    </div>
+    <div style="margin-top:32px;">
+      <a href="indexhtml.html" style="color:#1e7e34;text-decoration:underline;font-weight:600;font-size:1.1em;">🏆 View Leaderboard Only</a>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
