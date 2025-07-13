@@ -63,12 +63,17 @@ let score = 0;
 let answered = false;
 let quizStartTime = null;
 
+// --- Timer Variables ---
+let timer;
+let timerDuration = 8; // 16 seconds
+
 const questionDiv = document.getElementById("question");
 const optionsDiv = document.getElementById("options");
 const nextBtn = document.getElementById("nextBtn");
 const resultDiv = document.getElementById("result");
 const leaderboardDiv = document.getElementById("leaderboard");
 const leaderboardStatusDiv = document.getElementById("leaderboard-status");
+const countdownDiv = document.getElementById("countdown");
 
 function loadQuestion() {
   if (currentIndex === 0 && !quizStartTime) quizStartTime = Date.now();
@@ -79,13 +84,29 @@ function loadQuestion() {
   resultDiv.textContent = "";
   nextBtn.style.display = "none";
 
+  // Set up countdown
+  let countdown = timerDuration;
+  countdownDiv.textContent = `⏳ Time left: ${countdown}s`;
+  clearInterval(timer); // clear any existing timer
+  timer = setInterval(() => {
+    countdown--;
+    countdownDiv.textContent = `⏳ Time left: ${countdown}s`;
+    if (countdown <= 0) {
+      clearInterval(timer);
+      autoFail();
+    }
+  }, 1000);
+
   q.options.forEach(option => {
     const btn = document.createElement("button");
     btn.textContent = option;
     btn.classList.add("option");
     btn.style.backgroundColor = "";
     btn.disabled = false;
-    btn.addEventListener("click", () => checkAnswer(option, btn));
+    btn.addEventListener("click", () => {
+      clearInterval(timer);
+      checkAnswer(option, btn);
+    });
     optionsDiv.appendChild(btn);
   });
 }
@@ -123,6 +144,26 @@ function checkAnswer(selected, button) {
   nextBtn.style.display = "block";
 }
 
+// --- Auto-fail if timer runs out ---
+function autoFail() {
+  if (answered) return;
+  answered = true;
+  const correct = questions[currentIndex].answer;
+  resultDiv.innerHTML = `⏱️ Time's up! Correct answer: <strong>${correct}</strong>`;
+  resultDiv.style.color = "red";
+
+  // Highlight correct answer
+  const allOptions = document.querySelectorAll(".option");
+  allOptions.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correct) {
+      btn.style.backgroundColor = "#d4edda";
+    }
+  });
+
+  nextBtn.style.display = "block";
+}
+
 nextBtn.addEventListener("click", () => {
   currentIndex++;
   if (currentIndex < questions.length) {
@@ -133,6 +174,8 @@ nextBtn.addEventListener("click", () => {
 });
 
 function showResult() {
+  clearInterval(timer);
+  countdownDiv.textContent = "";
   questionDiv.textContent = "";
   optionsDiv.innerHTML = "";
   resultDiv.innerHTML = `🎉 Quiz Completed! You scored <strong>${score}/${questions.length}</strong>`;
@@ -286,54 +329,4 @@ const fbShowBtn = document.getElementById("showBtn");
 const fbList = document.getElementById("feedbackList");
 
 const setFbStatus = (msg, color) => {
-  fbStatus.textContent = msg;
-  fbStatus.style.color = color;
-};
-
-if (fbForm) {
-  fbForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("fb-name").value.trim();
-    const message = document.getElementById("fb-message").value.trim();
-    if (!name || !message) return setFbStatus("Fill in all fields", "red");
-
-    const { error } = await client.from("feedback").insert({ name, message });
-    if (error) {
-      console.error(error);
-      return setFbStatus("❌ insert failed", "red");
-    }
-
-    setFbStatus(`✅ Thank you, ${name}! (${new Date().toLocaleString()})`, "green");
-    fbForm.reset();
-    loadFeedback();
-  });
-
-  fbShowBtn.addEventListener("click", loadFeedback);
-
-  async function loadFeedback() {
-    fbList.innerHTML = "<li>Loading…</li>";
-    const { data, error } = await client
-      .from("feedback")
-      .select("name, message, created_at")
-      .order("created_at", { ascending: false })
-      .limit(20);
-
-    if (error) {
-      console.error(error);
-      fbList.innerHTML = "<li style='color:red'>load failed</li>";
-      return;
-    }
-
-    fbList.innerHTML = data.length
-      ? ""
-      : "<li>No feedback yet</li>";
-
-    data.forEach(({ name, message, created_at }) => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${name}</strong>
-                      <em>(${new Date(created_at).toLocaleString()})</em><br>
-                      ${message}`;
-      fbList.appendChild(li);
-    });
-  }
-}
+  fbStatus}

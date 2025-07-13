@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/1920px-Flag_of_Kenya.svg.png');
-  background-size: 100vw 60vh;
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
   background-position: top center;
 }
