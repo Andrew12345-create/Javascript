@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brain Blitz - Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="quiz-app">
+    <h1>🧠 Brain Blitz - Quiz</h1>
+
+    <!-- Category Selection -->
+    <div id="category-screen">
+      <h2>Select a category</h2>
+      <button class="category-btn" data-category="tech">Tech</button>
+      <button class="category-btn" data-category="culture">Culture</button>
+      <button class="category-btn" data-category="anime">Anime</button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" style="display: none;">
+      <div id="question-box">
+        <h3 id="question-text"></h3>
+        <div id="answers"></div>
+        <div id="timer-bar"></div>
+        <p>Score: <span id="score">0</span> | Streak: <span id="streak">0</span></p>
+      </div>
+    </div>
+
+    <!-- End Screen -->
+    <div id="end-screen" style="display: none;">
+      <h2>🎉 Quiz Complete!</h2>
+      <p>You earned <span id="final-score"></span> XP!</p>
+      <p>Time taken: <span id="final-time"></span></p>
+      <h3>🌍 Global Leaderboard</h3>
+      <ol id="leaderboard"></ol>
+      <button onclick="window.location.reload()">Play Again</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script type="module" src="quiz.js"></script>
+</body>
+</html>

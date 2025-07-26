@@ -1,0 +1,194 @@
+/* Hot stylish CSS with vibrant colors and smooth animations */
+
+/* Background gradient animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(270deg, #4169e1, #1e90ff, #4169e1, #1e90ff);
+  background-size: 800% 800%;
+  animation: gradientShift 15s ease infinite;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container styles */
+#login-container, #signup-container, #quiz-app {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(65, 105, 225, 0.6);
+  width: 380px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(65, 105, 225, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#login-container:hover, #signup-container:hover, #quiz-app:hover {
+  transform: scale(1.07);
+  box-shadow: 0 16px 48px rgba(65, 105, 225, 0.9);
+}
+
+h1 {
+  margin-bottom: 1.8rem;
+  font-weight: 800;
+  font-size: 2.8rem;
+  color: #fff;
+  text-shadow: 0 6px 20px rgba(65, 105, 225, 0.8);
+  letter-spacing: 3px;
+  font-family: 'Segoe UI Black', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  padding: 1rem 1.3rem;
+  margin-bottom: 1.3rem;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.2rem;
+  outline: none;
+  transition: box-shadow 0.4s ease, background-color 0.4s ease;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  box-shadow: inset 0 0 10px rgba(65, 105, 225, 0.5);
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  box-shadow: 0 0 20px 4px #4169e1;
+  background-color: #fff;
+  color: #333;
+}
+
+button {
+  padding: 1rem 1.3rem;
+  background: linear-gradient(45deg, #1e90ff, #4169e1);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-weight: 800;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 8px 28px rgba(65, 105, 225, 0.8);
+}
+
+button:hover {
+  background: linear-gradient(45deg, #4169e1, #1e90ff);
+  box-shadow: 0 12px 36px rgba(65, 105, 225, 1);
+}
+
+p {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+  letter-spacing: 0.7px;
+}
+
+p a {
+  color: #7abaff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.4s ease;
+}
+
+p a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Navigation buttons */
+.nav-button {
+  padding: 0.7rem 1.4rem;
+  margin: 0 0.6rem;
+  background: linear-gradient(45deg, #1e90ff, #4169e1);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 6px 20px rgba(65, 105, 225, 0.8);
+}
+
+.nav-button:hover {
+  background: linear-gradient(45deg, #4169e1, #1e90ff);
+  box-shadow: 0 10px 28px rgba(65, 105, 225, 1);
+}
+
+/* Quiz buttons */
+.answer-btn {
+  display: block;
+  width: 100%;
+  margin: 0.6rem 0;
+  padding: 1.1rem;
+  font-size: 1.2rem;
+  background: #222;
+  color: #fff;
+  border: 3px solid #4169e1;
+  border-radius: 14px;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(65, 105, 225, 0.7);
+}
+
+.answer-btn:hover:enabled {
+  background: #4169e1;
+  color: #fff;
+  border-color: #4169e1;
+}
+
+.answer-btn.correct {
+  background: #2ecc40 !important;
+  color: #fff;
+  border-color: #2ecc40;
+  box-shadow: 0 6px 20px rgba(46, 204, 64, 0.8) !important;
+}
+
+.answer-btn.incorrect {
+  background: #ff5555 !important;
+  color: #fff;
+  border-color: #ff5555;
+  box-shadow: 0 6px 20px rgba(255, 85, 85, 0.8) !important;
+}
+
+/* Feedback message */
+#feedback {
+  font-size: 1.2rem;
+  margin-top: 1.2rem;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(65, 105, 225, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  #login-container, #signup-container, #quiz-app {
+    width: 90%;
+    padding: 1.8rem 2.5rem;
+  }
+}
