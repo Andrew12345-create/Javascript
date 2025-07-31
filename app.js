@@ -239,7 +239,7 @@ initUI();
 
 async function sendVerificationEmail(email, code) {
     try {
-        const response = await fetch('http://localhost:5500/send-verification-email', {
+const response = await fetch('http://localhost:3000/send-verification-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -396,8 +396,8 @@ async function endQuiz() {
     showScreen('end');
     dom.finalScore.textContent = score;
     elapsedTime = Date.now() - startTime;
-    if (dom.finalTime || dom['final-time']) {
-        const finalTimeElement = dom.finalTime || dom['final-time'];
+    const finalTimeElement = document.getElementById('final-time');
+    if (finalTimeElement) {
         finalTimeElement.textContent = formatTime(elapsedTime);
     }
     await saveScoreToLeaderboard();
